@@ -140,7 +140,6 @@ class MyModel5(nn.Module):
             # convolutional layer 1. It sees 3x224x224 image tensor
             # and produces 16 feature maps 224x224 (i.e., a tensor 16x224x224)
             nn.Conv2d(in_channels=3, out_channels=16, kernel_size=3, padding=1),
-            nn.BatchNorm2d(16),
             nn.ReLU(),
             # 2x2 pooling with stride 2. It sees tensors 16x224x224
             # and halves their size, i.e., the output will be 16x112x112
@@ -149,27 +148,27 @@ class MyModel5(nn.Module):
             # convolutional layer (sees the output of the prev layer, i.e.,
             # 16x112x112 tensor)
             nn.Conv2d(16, 32, 3, padding=1),  # -> 32x112x112
-            nn.BatchNorm2d(32),
             nn.ReLU(),
             nn.MaxPool2d(2, 2),  # -> 32x56x56
             
             # convolutional layer
             nn.Conv2d(32, 64, 3, padding=1),  # -> 64x56x56
-            nn.BatchNorm2d(64),
             nn.ReLU(),
             nn.MaxPool2d(2, 2),  # -> 64x28x28
             
             # convolutional layer
             nn.Conv2d(64, 128, 3, padding=1),  # -> 128x28x28
-            nn.BatchNorm2d(128),
             nn.ReLU(),
             nn.MaxPool2d(2, 2),  # -> 128x14x14
-            
+
+            nn.BatchNorm2d(128),
+
             # convolutional layer
             nn.Conv2d(128, 256, 3, padding=1),  # -> 256x14x14
-            nn.BatchNorm2d(256),
             nn.ReLU(),
             nn.MaxPool2d(2, 2),  # -> 256x7x7
+            
+            nn.Dropout(dropout),
             
             # linear layer (128 * 14 * 14 -> 500)
             nn.Flatten(),  # -> 1x256x7x7 -> 1x64x28x28 # -> 1x128x14x14
