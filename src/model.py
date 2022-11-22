@@ -111,12 +111,12 @@ class MyModel(nn.Module):
             # linear layer (128 * 14 * 14 -> 500)
             nn.Flatten(),  # 1x64x28x28 
             
-            nn.Linear(64 * 28 * 28, 256),  # -> 500 # 3 layers
-            nn.BatchNorm1d(256),
+            nn.Linear(64 * 28 * 28, 500),  # -> 500 # 3 layers
+            nn.BatchNorm1d(500),
             nn.Dropout(dropout),
 
             nn.ReLU(),
-            nn.Linear(256, num_classes),
+            nn.Linear(500, num_classes),
         )
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
